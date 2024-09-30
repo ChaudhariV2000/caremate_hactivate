@@ -57,7 +57,7 @@ const reminder = async (req, res) => {
 
 const getAllReminders = async (req, res) => {
   try {
-    const reminders = await Reminder.find(); // You can filter by userId if necessary
+    const reminders = await Reminder.find();
     res.status(200).json(reminders);
   } catch (error) {
     res.status(500).json({ error: error.message });
