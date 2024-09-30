@@ -11,61 +11,71 @@ const App = () => {
     fetchCaregivers(searchCriteria);
   }, [searchCriteria]);
 
-  const fetchCaregivers = async (criteria) => {
-    // Implement API call to fetch caregivers
-    // Example of updating caregivers (replace with actual API call)
-    const fetchedCaregivers = [
-      {
-        _id: 1,
-        name: 'John Doe',
-        age: 45,
-        experience: 10,
-        specialties: ['Elderly Care', 'Physical Therapy'],
-        hourlyRate: 25,
-        location: 'New York, USA',
-        languages: ['English', 'Spanish'],
-        rating: 4.8,
-        imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
-      },
-      {
-        _id: 1,
-        name: 'John Doe',
-        age: 45,
-        experience: 10,
-        specialties: ['Elderly Care', 'Physical Therapy'],
-        hourlyRate: 25,
-        location: 'New York, USA',
-        languages: ['English', 'Spanish'],
-        rating: 4.8,
-        imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
-      },
-      {
-        _id: 1,
-        name: 'John Doe',
-        age: 45,
-        experience: 10,
-        specialties: ['Elderly Care', 'Physical Therapy'],
-        hourlyRate: 25,
-        location: 'New York, USA',
-        languages: ['English', 'Spanish'],
-        rating: 4.8,
-        imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
-      },
-      {
-        _id: 1,
-        name: 'John Doe',
-        age: 45,
-        experience: 10,
-        specialties: ['Elderly Care', 'Physical Therapy'],
-        hourlyRate: 25,
-        location: 'New York, USA',
-        languages: ['English', 'Spanish'],
-        rating: 4.8,
-        imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
-      },
-      // ... other caregiver objects
-    ];
-    setCaregivers(fetchedCaregivers);
+//   const fetchCaregivers = async (criteria) => {
+//     // Implement API call to fetch caregivers
+//     // Example of updating caregivers (replace with actual API call)
+//     const fetchedCaregivers = [
+//       {
+//         _id: 1,
+//         name: 'John Doe',
+//         age: 45,
+//         experience: 10,
+//         specialties: ['Elderly Care', 'Physical Therapy'],
+//         hourlyRate: 25,
+//         location: 'New York, USA',
+//         languages: ['English', 'Spanish'],
+//         rating: 4.8,
+//         imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
+//       },
+//       {
+//         _id: 1,
+//         name: 'John Doe',
+//         age: 45,
+//         experience: 10,
+//         specialties: ['Elderly Care', 'Physical Therapy'],
+//         hourlyRate: 25,
+//         location: 'New York, USA',
+//         languages: ['English', 'Spanish'],
+//         rating: 4.8,
+//         imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
+//       },
+//       {
+//         _id: 1,
+//         name: 'John Doe',
+//         age: 45,
+//         experience: 10,
+//         specialties: ['Elderly Care', 'Physical Therapy'],
+//         hourlyRate: 25,
+//         location: 'New York, USA',
+//         languages: ['English', 'Spanish'],
+//         rating: 4.8,
+//         imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
+//       },
+//       {
+//         _id: 1,
+//         name: 'John Doe',
+//         age: 45,
+//         experience: 10,
+//         specialties: ['Elderly Care', 'Physical Therapy'],
+//         hourlyRate: 25,
+//         location: 'New York, USA',
+//         languages: ['English', 'Spanish'],
+//         rating: 4.8,
+//         imageUrl: 'https://media.geeksforgeeks.org/gfg-gg-logo.svg',
+//       },
+//       // ... other caregiver objects
+//     ];
+//     setCaregivers(fetchedCaregivers);
+//   };
+
+  const fetchCaregivers = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/fetchCaregivers'); // Replace with your backend API endpoint
+      const data = await response.json();
+      setCaregivers(data);
+    } catch (error) {
+      console.error('Error fetching caregivers:', error);
+    }
   };
 
   const CaregiverCard = ({ caregiver }) => {
