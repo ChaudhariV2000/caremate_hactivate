@@ -1,18 +1,16 @@
 import React from "react";
 import { FaCalendarAlt, FaVideo, FaHeartbeat, FaBell, FaUserMd } from "react-icons/fa";
-import axios from 'axios';
-import { useEffect, useState } from "react";
 
 const Home = () => {
 
   return (
     <div className="font-sans bg-gray-100">
       {/* Hero Section */}
-      <header className="bg-white py-20 relative">
+      <header className="bg-white py-32 relative">
         <div className="container mx-auto text-center relative z-10">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Compassionate Care at Your Fingertips</h2>
-          <p className="text-xl text-gray-600 mb-8">Connecting elderly individuals with caregivers, family members, and health professionals for remote assistance.</p>
-          <button className="bg-gray-800 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-700 transition duration-300">Get Started</button>
+          <h2 className="text-5xl font-bold text-gray-800 mb-6">Compassionate Care at Your Fingertips</h2>
+          <p className="text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">Connecting elderly individuals with caregivers, family members, and health professionals for remote assistance.</p>
+          <button className="bg-gray-800 text-white py-3 px-8 rounded-full text-xl hover:bg-gray-700 transition duration-300">Get Started</button>
         </div>
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{backgroundImage: "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')", filter: "brightness(0.8)"}}></div>
       </header>

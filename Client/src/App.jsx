@@ -8,6 +8,7 @@ import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
 import Video from "./Pages/video";
 import Room from "./Pages/Room";
+import Profile from "./Pages/Profile.jsx";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
           <Route path="/cg" element = {<CaregiverSearchForm />}/>
           <Route path="/caregivers" element = {<CG_page />}/>
           <Route path="/cg_reg" element = {<CaregiverRegForm />}/>
-          
+          <Route path="/profile" element = {<Profile />}/>
         </Routes>
         <Footer/>
       </div>

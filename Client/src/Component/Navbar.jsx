@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import Video from "../Pages/video";
-import Message from "../Pages/Message";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,28 +33,9 @@ const Navbar = () => {
                Find Caregivers
               </Link>
               <div className="relative">
-                <button
-                  onClick={toggleAbout}
-                  className="flex items-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium focus:outline-none"
-                >
-                  About
-                </button>
-                {isAboutOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                    <Link
-                      to="/Video" 
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Video
-                    </Link>
-                    <Link
-                      to="/Message"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Message
-                    </Link>
-                  </div>
-                )}
+                <Link to = '/Video' className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  Connect
+                </Link>
               </div>
               <Link
                 to="/" // Link to contact page
@@ -74,10 +54,10 @@ const Navbar = () => {
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <Link
-                      to="/" // Link to edit profile page
+                      to="/profile" // Link to edit profile page
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Edit Profile
+                      Show Profile
                     </Link>
                     <Link
                       to="/" // Link to logout
