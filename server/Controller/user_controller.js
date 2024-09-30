@@ -10,7 +10,7 @@ const { User, Reminder, Caregiver, UserLogin } = require("../Model/user_model");
 
 const register = async (req, res) => {
   const { name, password, number, address, dob } = req.body;
-
+  console.log("name")
   try {
 
     const hashedPassword = await bcrypt.hash(String(password), 10);
@@ -173,7 +173,7 @@ const callUser = async (req, res) => {
     const call = await client.calls.create({
       to: userPhoneNumber,
       from: twilioPhoneNumber,
-      url: 'https://bbb2-27-0-59-131.ngrok-free.app/voice',
+      url: 'https://f8ae-27-0-59-131.ngrok-free.app/voice',
     });
 
     console.log(`Call initiated: ${call.sid}`);
