@@ -25,7 +25,7 @@ const Room = () => {
   };
 
   return (
-      <div>
+      <div className='mt-2 mb-5'>
         <div ref={myMeeting}/>
       </div>
   )

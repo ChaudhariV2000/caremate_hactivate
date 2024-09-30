@@ -2,23 +2,31 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const twilio = require('twilio');
 
-const { User, Reminder, Caregiver } = require("../Model/user_model");
+const { User, Reminder, Caregiver, UserLogin } = require("../Model/user_model");
 
 ///------------
 
 //-------------------
 
 const register = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password, number, address, dob } = req.body;
 
-  console.log(username)
   try {
+
     const hashedPassword = await bcrypt.hash(String(password), 10);
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({
+      username: name,
+      password: hashedPassword,
+      number: number,
+      address: address,
+      dob: dob
+    });
     await newUser.save();
+
     res.status(201).send("User registered successfully");
+
   } catch (error) {
-    res.status(400).send(`Error registering user: ${error.message}`);
+    res.status(400).send(`Error registering user:Check Your Credentials `);
   }
 };
 
