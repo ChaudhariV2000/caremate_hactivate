@@ -143,8 +143,7 @@ const caregiverSchema = new mongoose.Schema({
       enum: 'Point'
     },
     coordinates: {
-      type: [Number],
-      required: true
+      type: [Number]
     }
   },
   description: {

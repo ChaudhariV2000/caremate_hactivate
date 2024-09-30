@@ -9,14 +9,7 @@ const MapComponent = () => {
       zoom: 15,
     });
 
-    // Add a marker at the center
-    const marker = new window.google.maps.Marker({
-      position: { lat: 28.6139, lng: 77.2090 }, // Same as center coordinates
-      map,
-      title: 'Your Location', // Optional marker title
-    });
-
-    // Add event listener to handle map clicks (optional)
+    // Add event listener to handle map clicks
     map.addListener('click', (event) => {
       console.log('Clicked coordinates:', event.latLng.toJSON());
     });
