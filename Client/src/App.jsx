@@ -1,7 +1,6 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Helmet } from 'react-helmet';
-// import React from "react";
 import Home from "./Pages/Home";
 import CG_page from "./Pages/Cargivers.jsx";
 import CaregiverRegForm from "./Pages/CaregiverRegForm.jsx"
@@ -14,13 +13,13 @@ import Room from "./Pages/Room";
 import Emergency_page from "./Pages/Emergency_page";
 import Reminder_form from "./Pages/Reminder_form.jsx";
 
-
-
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   const openAuthModal = () => setIsAuthModalOpen(true);
   const closeAuthModal = () => setIsAuthModalOpen(false);
+  const toggleChatbot = () => setIsChatbotOpen(!isChatbotOpen);
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -30,9 +29,6 @@ function App() {
   }, []);
 
   return (
-
-
-    
     <Router>
       <Helmet>
         <title>Caremate</title>
@@ -55,7 +51,7 @@ function App() {
         </main>
         <Footer />
         <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
-      </div>
+        </div>
     </Router>
   );
 }
