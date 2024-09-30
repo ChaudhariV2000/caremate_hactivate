@@ -3,6 +3,19 @@ const mongoose = require("mongoose");
 
 
 //patient_login
+const registerSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+
+  },
+  password: { type: String, required: true },
+  number: { type: String, required: true },
+  address: { type: String, required: true },
+  dob: { type: Date, required: true }
+});
+
 const userLoginSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
 
@@ -16,6 +29,14 @@ const reminderSchema = new mongoose.Schema({
     type: String,
 
     required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true
+  },
+  taken: {
+    type: Boolean,
+    default: false
   },
   title: {
     type: String,
@@ -70,6 +91,7 @@ const caregiverSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+
   specialties: {
     type: [String],
     enum: [
@@ -121,8 +143,7 @@ const caregiverSchema = new mongoose.Schema({
       enum: 'Point'
     },
     coordinates: {
-      type: [Number],
-      required: true
+      type: [Number]
     }
   },
   description: {
@@ -159,7 +180,8 @@ const caregiverSchema = new mongoose.Schema({
 
 const Caregiver = mongoose.model('Caregiver', caregiverSchema);
 
-const User = mongoose.model("Pateints", userLoginSchema);
+
+const User = mongoose.model("Pateints", registerSchema);
 const Reminder = mongoose.model("Reminders", reminderSchema);
-module.exports = { User, Reminder,Caregiver };
+module.exports = { User, Reminder, Caregiver };
 
