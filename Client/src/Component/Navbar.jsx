@@ -28,6 +28,9 @@ const Navbar = () => {
               >
                 Home
               </Link>
+              <Link to="/cg" className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+               Find Caregivers
+              </Link>
               <div className="relative">
                 <button
                   onClick={toggleAbout}
