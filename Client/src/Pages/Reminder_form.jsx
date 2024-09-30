@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FaClock, FaCalendarAlt, FaUser, FaHeading, FaCalendarCheck, FaRedoAlt } from "react-icons/fa";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 const ScheduleReminders = () => {
   const [formData, setFormData] = useState({
@@ -12,20 +14,21 @@ const ScheduleReminders = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulating API call
-    setTimeout(() => {
-      console.log("Form submitted:", formData);
-      setIsSubmitting(false);
-      // Reset form after successful submission
+
+    try {
+      await axios.post('https://bbb2-27-0-59-131.ngrok-free.app/reminder', formData); // Replace with your actual API endpoint
+
+      // Optionally reset form data after submission
       setFormData({
         username: "",
         title: "",
@@ -34,14 +37,22 @@ const ScheduleReminders = () => {
         time: "",
         repeat: ""
       });
-    }, 2000);
+
+      // Optionally navigate to the reminders list after successful submission
+      navigate("/reminders"); // Adjust the path according to your routing setup
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-300" >
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <h2 className="text-4xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 font-serif">Schedule Reminders</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Username Field */}
           <div className="relative">
             <label htmlFor="username" className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900">
               <FaUser className="inline mr-1" />Username
@@ -57,6 +68,7 @@ const ScheduleReminders = () => {
             />
           </div>
 
+          {/* Title Field */}
           <div className="relative">
             <label htmlFor="title" className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900">
               <FaHeading className="inline mr-1" />Title
@@ -72,6 +84,7 @@ const ScheduleReminders = () => {
             />
           </div>
 
+          {/* Reminder Type Field */}
           <div className="relative">
             <label htmlFor="type" className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900">
               <FaCalendarCheck className="inline mr-1" />Reminder Type
@@ -90,6 +103,7 @@ const ScheduleReminders = () => {
             </select>
           </div>
 
+          {/* Date and Time Fields */}
           <div className="grid grid-cols-2 gap-4">
             <div className="relative">
               <label htmlFor="date" className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900">
@@ -120,6 +134,7 @@ const ScheduleReminders = () => {
             </div>
           </div>
 
+          {/* Repeat Field */}
           <div className="relative">
             <label htmlFor="repeat" className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900">
               <FaRedoAlt className="inline mr-1" />Repeat
@@ -140,6 +155,7 @@ const ScheduleReminders = () => {
             </select>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-blue-500 to-teal-400 text-white py-3 px-4 rounded-md hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out font-semibold text-lg shadow-lg"
@@ -158,6 +174,16 @@ const ScheduleReminders = () => {
             )}
           </button>
         </form>
+
+        {/* Link to Reminders List */}
+        <div className="mt-4">
+          <button
+            onClick={() => navigate("/reminders")} // Add onClick to navigate
+            className="w-full bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition duration-200 ease-in-out font-semibold text-lg shadow-md"
+          >
+            View Reminders List
+          </button>
+        </div>
       </div>
     </div>
   );

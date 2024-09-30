@@ -57,10 +57,15 @@ const login = async (req, res) => {
 };
 
 const reminder = async (req, res) => {
-  const { username, phoneNumber, title, type, time, date, repeat } = req.body;
+  const { username, title, type, time, date, repeat } = req.body;
 
   try {
-    const reminder = new Reminder({ username, phoneNumber, title, type, time, date, repeat });
+
+    // const patient = await User.findOne({ username })
+
+    // const phoneNumber = patient.number;
+
+    const reminder = new Reminder({ username: username, phoneNumber: "+919860173150", title: title, type: type, time: "2024-09-30T07:21:13.357Z", date: "2024-09-30T07:21:13.357Z", repeat: repeat });
     await reminder.save();
     res.status(201).json(reminder);
   } catch (error) {
@@ -116,7 +121,9 @@ const updateReminder = async (req, res) => {
 
 
 const deleteReminder = async (req, res) => {
+  console.log("hello")
   const { id } = req.params;
+  console.log(req.params.id)
   try {
     const reminder = await Reminder.findByIdAndDelete(id);
 
