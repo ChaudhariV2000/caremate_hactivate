@@ -43,10 +43,10 @@ const login = async (req, res) => {
 };
 
 const reminder = async (req, res) => {
-  const { userId, title, type, time, date, repeat } = req.body;
+  const { username, title, type, time, date, repeat } = req.body;
 
   try {
-    const reminder = new Reminder({ userId, title, type, time, date, repeat });
+    const reminder = new Reminder({ username, title, type, time, date, repeat });
     await reminder.save();
     res.status(201).json(reminder);
   } catch (error) {
@@ -54,4 +54,53 @@ const reminder = async (req, res) => {
   }
 }
 
-module.exports = { register, login, reminder };
+
+const getAllReminders = async (req, res) => {
+  try {
+    const reminders = await Reminder.find(); // You can filter by userId if necessary
+    res.status(200).json(reminders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateReminder = async (req, res) => {
+  const { id } = req.params;
+  const { title, type, time, date, repeat } = req.body;
+
+  try {
+    const reminder = await Reminder.findByIdAndUpdate(
+      id,
+      { title, type, time, date, repeat, updatedAt: Date.now() },
+      { new: true, runValidators: true }
+    );
+
+    if (!reminder) {
+      return res.status(404).json({ error: "Reminder not found" });
+    }
+
+    res.status(200).json(reminder);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+const deleteReminder = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const reminder = await Reminder.findByIdAndDelete(id);
+
+    if (!reminder) {
+      return res.status(404).json({ error: "Reminder not found" });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+module.exports = { register, login, reminder, getAllReminders, deleteReminder, updateReminder };

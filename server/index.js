@@ -22,7 +22,7 @@ connectDB();
 app.use("/", require("./Routes/authroutes"));
 
 //--------
-cron.schedule('* * * * *', async () => { // Runs every minute
+cron.schedule('* * * * *', async () => {
   const now = new Date();
   const reminders = await Reminder.find({
     date: { $lte: now },
