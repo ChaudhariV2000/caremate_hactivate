@@ -12,9 +12,9 @@ const userLoginSchema = new mongoose.Schema({
 //-------reminder----
 
 const reminderSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Patients', // Reference to the User model
+  username: {
+    type: String,
+
     required: true,
   },
   title: {
