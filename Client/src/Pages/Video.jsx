@@ -10,7 +10,7 @@ const Video = () => {
   }, [navigate, value]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 from-blue-500 to-purple-600 p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md transform transition-all hover:scale-105">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Join Room</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
