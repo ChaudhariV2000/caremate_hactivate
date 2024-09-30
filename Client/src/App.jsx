@@ -11,6 +11,7 @@ import Footer from "./Component/Footer";
 import Video from "./Pages/video";
 import Room from "./Pages/Room";
 import Emergency_page from "./Pages/Emergency_page";
+import Reminder_form from "./Pages/Reminder_form.jsx";
 
 
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="/cg_reg" element={<CaregiverRegForm />} />
             <Route path="/Signup" element={<AuthModal />} />
             <Route path="/Emergency_page" element={<Emergency_page />} />
+            <Route path="/Reminder" element={<Reminder_form />} />
           </Routes>
         </main>
         <Footer />
