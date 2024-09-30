@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import MapComp from "../Component/MapComponent"
 
 const CaregiverSearchForm = ({ onSubmit }) => {
   const [step, setStep] = useState(1);
@@ -58,6 +59,7 @@ const CaregiverSearchForm = ({ onSubmit }) => {
   const checkboxClass = "form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out";
 
   return (
+    <div>
     <div className="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Find Your Ideal Caregiver</h2>
       {renderStepIndicator()}
@@ -123,7 +125,7 @@ const CaregiverSearchForm = ({ onSubmit }) => {
             <div>
               <label className="block mb-2 font-semibold text-gray-700">Point Your Location on Map</label>
               <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-                Map Component (Click to set location)
+                <MapComp/>
               </div>
             </div>
           </div>
@@ -228,7 +230,22 @@ const CaregiverSearchForm = ({ onSubmit }) => {
           )}
         </div>
       </form>
+
+      
     </div>
+    <div className="flex justify-center max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
+    <Link
+            to="/cg_reg" // Using Link instead of anchor tag
+            className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+          >
+            
+            <button className="bg-white text-gray-800 py-2 px-6 rounded-full text-lg hover:bg-gray-200 transition duration-300">
+              Are you a care giver yourself? click here to be a part of Caremate
+            </button>
+  </Link>
+  </div></div>
+
+    
   );
 };
 
