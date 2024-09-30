@@ -10,6 +10,7 @@ import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
 import Video from "./Pages/video";
 import Room from "./Pages/Room";
+import Profile from "./Pages/Profile.jsx";
 import Emergency_page from "./Pages/Emergency_page";
 import Reminder_form from "./Pages/Reminder_form.jsx";
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/Signup" element={<AuthModal />} />
             <Route path="/Emergency_page" element={<Emergency_page />} />
             <Route path="/Reminder" element={<Reminder_form />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <Footer />
