@@ -13,6 +13,8 @@ const corsOptions = {
   methods: 'GET,POST',
   allowedHeaders: 'Content-Type',
 };
+
+
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
