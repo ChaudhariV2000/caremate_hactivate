@@ -6,6 +6,9 @@ require('dotenv').config({ path: './database/.env' });
 const express = require("express");
 const connectDB = require("./database/db");
 const cors = require("cors");
+const http = require("http");
+const { Server } = require("socket.io"); // Import socket.io
+
 
 const app = express();
 const corsOptions = {
@@ -13,6 +16,8 @@ const corsOptions = {
   methods: 'GET,POST',
   allowedHeaders: 'Content-Type',
 };
+
+
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -22,6 +27,10 @@ connectDB();
 
 // Routes
 app.use("/", require("./Routes/authroutes"));
+
+
+
+
 
 
 const PORT = process.env.PORT || 5000;

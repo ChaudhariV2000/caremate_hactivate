@@ -3,6 +3,8 @@ import React from "react";
 import Home from "./Pages/Home";
 import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
+import Video from "./Pages/video";
+import Room from "./Pages/Room";
 
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/" element = {<Home />}/>
+          <Route path="/Video" element = {<Video/>}/>
+          <Route path="/room/:roomId" element = {<Room />}/>
         </Routes>
         <Footer/>
       </div>

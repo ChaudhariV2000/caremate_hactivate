@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import Video from "../Pages/video";
+import Message from "../Pages/Message";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,13 +40,13 @@ const Navbar = () => {
                 {isAboutOpen && (
                   <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <Link
-                      to="/" // Using Link for navigation to video page
+                      to="/Video" 
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Video
                     </Link>
                     <Link
-                      to="/" // Using Link for navigation to message page
+                      to="/Message"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Message
