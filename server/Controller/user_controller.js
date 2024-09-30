@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User, Reminder } = require("../Model/user_model");
+const { User, Reminder,Caregiver  } = require("../Model/user_model");
 
 const register = async (req, res) => {
   const { username, password } = req.body;
@@ -101,6 +101,27 @@ const deleteReminder = async (req, res) => {
   }
 };
 
+const fetchCaregivers = async (req, res) => {
+  try {
+    const caregivers = await Caregiver.find(); // You can filter here based on criteria if needed
+    res.json(caregivers);
+  } catch (error) {
+    console.error('Error fetching caregivers:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+// Route handler for creating new caregivers
+const setCaregivers = async (req, res) => {
+  try {
+    const newCaregiver = new Caregiver(req.body);
+    const savedCaregiver = await newCaregiver.save();
+    res.status(201).json(savedCaregiver);
+  } catch (error) {
+    console.error('Error creating caregiver:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 
-module.exports = { register, login, reminder, getAllReminders, deleteReminder, updateReminder };
+module.exports = { register, login, reminder, getAllReminders, deleteReminder, updateReminder,fetchCaregivers, setCaregivers };
