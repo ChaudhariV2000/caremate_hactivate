@@ -9,7 +9,6 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
-  const toggleContact = () => setIsContactOpen(!isContactOpen);
 
   return (
     <nav className="bg-gradient-to-r  from-indigo-500 to-blue-300">
@@ -27,18 +26,11 @@ const Navbar = () => {
               <NavLink to="/Reminder" icon={<Bell className="mr-1" size={18} />}>Set Reminder</NavLink>
               <NavLink to="/cg" icon={<Users className="mr-1" size={18} />}>Find Caregivers</NavLink>
               <div className="relative">
-                <button onClick={toggleContact} className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
+                <Link to = '/Video' className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
                   <MessageCircle className="mr-1" size={18} />
                   Contact
-                </button>
-                {isContactOpen && (
-                  <DropdownMenu>
-                    <DropdownItem to="/Video">Video</DropdownItem>
-                    <DropdownItem to="/Message">Message</DropdownItem>
-                  </DropdownMenu>
-                )}
+                </Link>
               </div>
-              <NavLink to="/" icon={<Phone className="mr-1" size={18} />}>Contact Us</NavLink>
               <div className="relative">
                 <button onClick={toggleProfile} className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
                   <User className="mr-1" size={18} />
@@ -46,7 +38,7 @@ const Navbar = () => {
                 </button>
                 {isProfileOpen && (
                   <DropdownMenu>
-                    <DropdownItem to="/">Edit Profile</DropdownItem>
+                    <DropdownItem to="/profile">Edit Profile</DropdownItem>
                     <DropdownItem to="/">
                       <LogOut className="mr-1" size={18} />
                       Logout
