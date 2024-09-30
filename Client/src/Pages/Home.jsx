@@ -4,20 +4,6 @@ import axios from 'axios';
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  // const [token, setToken] = useState(sessionStorage.getItem("token") || "");
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div className="font-sans bg-gray-100">
