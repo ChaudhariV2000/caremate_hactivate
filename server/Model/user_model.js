@@ -17,6 +17,14 @@ const reminderSchema = new mongoose.Schema({
 
     required: true,
   },
+  phoneNumber: {
+    type: String,
+    required: true
+  },
+  taken: {
+    type: Boolean,
+    default: false
+  },
   title: {
     type: String,
     required: true,
@@ -70,6 +78,7 @@ const caregiverSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+
   specialties: {
     type: [String],
     enum: [
@@ -161,5 +170,5 @@ const Caregiver = mongoose.model('Caregiver', caregiverSchema);
 
 const User = mongoose.model("Pateints", userLoginSchema);
 const Reminder = mongoose.model("Reminders", reminderSchema);
-module.exports = { User, Reminder,Caregiver };
+module.exports = { User, Reminder, Caregiver };
 
