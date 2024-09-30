@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCalendarAlt, FaVideo, FaHeartbeat, FaBell, FaUserMd } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useEffect, useState } from "react";
 
@@ -64,7 +65,20 @@ const Home = () => {
             <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Care 3" className="w-full h-64 object-cover rounded-lg shadow-md" />
           </div>
         </div>
+        <div className="flex justify-center">
+        <Link
+                to="/cg_reg" // Using Link instead of anchor tag
+                className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                
+                <button className="bg-white text-gray-800 py-2 px-6 rounded-full text-lg hover:bg-gray-200 transition duration-300">
+                  Are you a care giver yourself? click here to be a part of Caremate
+                </button>
+      </Link>
+      </div>
       </section>
+
+      
     </div>
   );
 };
