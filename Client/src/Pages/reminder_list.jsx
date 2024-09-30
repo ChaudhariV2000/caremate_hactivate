@@ -20,7 +20,7 @@ const RemindersList = () => {
     const handleDelete = async (id) => {
         try {
             alert(id)
-            await axios.delete(`https://bbb2-27-0-59-131.ngrok-free.app/reminder/${id}`);
+            await axios.delete(`https://f8ae-27-0-59-131.ngrok-free.app/reminder/${id}`);
 
             setReminders(reminders.filter((reminder) => reminder._id !== id)); // Update state to remove deleted reminder
         } catch (error) {

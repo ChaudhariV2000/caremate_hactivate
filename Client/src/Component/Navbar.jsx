@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center text-white text-xl font-bold">
-              <img src="./Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
+              <img src=".\public\Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
               Caremate
             </Link>
           </div>
@@ -26,7 +26,7 @@ const Navbar = () => {
               <NavLink to="/Reminder" icon={<Bell className="mr-1" size={18} />}>Set Reminder</NavLink>
               <NavLink to="/cg" icon={<Users className="mr-1" size={18} />}>Find Caregivers</NavLink>
               <div className="relative">
-                <Link to = '/Video' className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
+                <Link to='/Video' className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
                   <MessageCircle className="mr-1" size={18} />
                   Contact
                 </Link>
