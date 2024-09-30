@@ -38,7 +38,7 @@ const ScheduleReminders = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-teal-400 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-300" >
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <h2 className="text-4xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 font-serif">Schedule Reminders</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
