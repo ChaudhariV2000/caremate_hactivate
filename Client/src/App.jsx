@@ -1,5 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Helmet } from 'react-helmet';
 // import React from "react";
 import Home from "./Pages/Home";
 import CG_page from "./Pages/Cargivers.jsx";
@@ -33,6 +34,10 @@ function App() {
 
     
     <Router>
+      <Helmet>
+        <title>Caremate</title>
+        <link rel="icon" type="image/png" href="./Caremate_icon.png" />
+      </Helmet>
       <div className="flex flex-col min-h-screen">
         <Navbar openAuthModal={openAuthModal} />
         <main className="flex-grow">
