@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../Model/user_model");
+const { User, Reminder } = require("../Model/user_model");
 
 const register = async (req, res) => {
   const { username, password } = req.body;
@@ -42,4 +42,16 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const reminder = async (req, res) => {
+  const { userId, title, type, time, date, repeat } = req.body;
+
+  try {
+    const reminder = new Reminder({ userId, title, type, time, date, repeat });
+    await reminder.save();
+    res.status(201).json(reminder);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = { register, login, reminder };
