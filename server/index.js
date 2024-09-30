@@ -4,6 +4,7 @@ const connectDB = require("./database/db");
 const cors = require("cors");
 const cron = require('node-cron');
 const twilio = require('twilio');
+const axios = require('axios');
 const { Reminder } = require("./Model/user_model")
 
 const app = express();
@@ -41,21 +42,31 @@ cron.schedule('* * * * *', async () => {
   for (const reminder of reminders) {
     console.log(`Reminder: ${reminder.title} - Time: ${reminder.time}`);
 
-    // Send SMS using Twilio
+
     try {
-      // await twilioClient.messages.create({
-      //   body: `Reminder: ${reminder.title} - Time: ${reminder.time}`,
-      //   from: twilioPhoneNumber, // Twilio phone number
-      //   to: "+919860173150" // Replace with actual user phone number from the reminder
-      // });
+      await twilioClient.messages.create({
+        body: `Reminder: ${reminder.title} - Time: ${reminder.time}`,
+        from: twilioPhoneNumber,
+        to: "+919860173150" // Replace with actual user phone number from the reminder
+      });
 
       console.log(`SMS sent to ${reminder.userPhoneNumber}`);
     } catch (error) {
       console.error('Error sending SMS:', error);
     }
+    try {
+      const response = await axios.post('https://bbb2-27-0-59-131.ngrok-free.app/call-user', {
+        phone: reminder.phoneNumber,
 
-    reminder.completed = true; // Mark reminder as completed
-    await reminder.save(); // Save the updated reminder
+      });
+
+      console.log(`Route /user-route called successfully for ${reminder.userPhoneNumber}. Response:`, response.data);
+    } catch (error) {
+      console.error('Error calling user route:', error);
+    }
+
+    reminder.completed = true;
+    await reminder.save();
   }
 });
 
