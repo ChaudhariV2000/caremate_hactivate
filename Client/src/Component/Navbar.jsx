@@ -24,11 +24,18 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
+            
               <Link
                 to="/" // Using Link instead of anchor tag
                 className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Home
+              </Link>
+              <Link
+                to="/Reminder" // Using Link instead of anchor tag
+                className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Set reminder
               </Link>
               <Link to="/cg" className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                Find Caregivers
@@ -38,7 +45,7 @@ const Navbar = () => {
                   onClick={toggleAbout}
                   className="flex items-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium focus:outline-none"
                 >
-                  About
+                  Contact
                 </button>
                 {isAboutOpen && (
                   <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
@@ -71,6 +78,7 @@ const Navbar = () => {
                   <FaUser className="mr-2" />
                   Profile
                 </button>
+                
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <Link
@@ -88,6 +96,13 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+              <Link to="/Emergency_page">
+              <button
+                className="bg-red-600 text-white  text-l py-3 px-6 rounded-lg shadow-lg hover:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300"
+              >
+                Emergency
+              </button>
+              </Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
