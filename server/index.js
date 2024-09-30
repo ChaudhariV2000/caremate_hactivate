@@ -23,9 +23,6 @@ connectDB();
 // Routes
 app.use("/", require("./Routes/authroutes"));
 
-app.get("/", (req, res) => {
-  res.end("hello vedant");
-})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
