@@ -17,7 +17,6 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/" element = {<Home />}/>
-          <Route path="/cg" element = {<CG_page />}/>
           <Route path="/Video" element = {<Video/>}/>
           <Route path="/room/:roomId" element = {<Room />}/>
           <Route path="/cg" element = {<CaregiverSearchForm />}/>
