@@ -102,7 +102,7 @@ const App = () => {
               Specialties: {caregiver.specialties.join(', ')}
             </p>
             <p className="text-sm text-gray-600 text-right">
-              ${caregiver.hourlyRate}/hr
+              {caregiver.hourlyRate}/hr
             </p>
           </div>
           <div className="flex items-center mt-4">
