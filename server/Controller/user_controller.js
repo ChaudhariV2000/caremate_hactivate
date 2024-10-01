@@ -173,7 +173,7 @@ const callUser = async (req, res) => {
     const call = await client.calls.create({
       to: userPhoneNumber,
       from: twilioPhoneNumber,
-      url: 'https://f8ae-27-0-59-131.ngrok-free.app/voice',
+      url: 'https://0875-27-0-59-131.ngrok-free.app/voice',
     });
 
     console.log(`Call initiated: ${call.sid}`);

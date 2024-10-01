@@ -26,7 +26,7 @@ const ScheduleReminders = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post('https://f8ae-27-0-59-131.ngrok-free.app/reminder', formData); // Replace with your actual API endpoint
+      await axios.post('https://0875-27-0-59-131.ngrok-free.app/reminder', formData); // Replace with your actual API endpoint
 
       // Optionally reset form data after submission
       setFormData({
