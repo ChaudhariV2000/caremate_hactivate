@@ -28,9 +28,16 @@ const MapComponent = () => {
 
   useEffect(() => {
     if (mapLoaded && mapRef.current) {
+      const center = { lat: 28.6139, lng: 77.2090 }; // Mumbai's coordinates
       const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 28.6139, lng: 77.2090 }, // Mumbai's coordinates
+        center: center,
         zoom: 15,
+      });
+
+      // Add a marker at the center
+      new window.google.maps.Marker({
+        position: center,
+        map: map,
       });
 
       map.addListener('click', (event) => {
