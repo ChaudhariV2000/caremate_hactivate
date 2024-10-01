@@ -30,6 +30,7 @@ const EmergencyButton = ({ onEmergencyCall }) => {
       }}
     >
       {isLoading ? 'Contacting...' : 'Emergency Call'}
+      
     </button>
   );
 };

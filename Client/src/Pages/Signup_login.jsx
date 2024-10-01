@@ -100,7 +100,7 @@ const AuthModal = ({ isOpen = true, onClose }) => {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-bold text-gray-800">{isSignup ? 'Sign Up' : 'Login'}</h2>
-          <button onClick={onClose} className="text-gray-600 hover:text-gray-800">
+          <button onClick={() => navigate(-1)} className="text-gray-600 hover:text-gray-800">
             <XIcon size={24} />
           </button>
         </div>

@@ -24,8 +24,8 @@ const MapComponent = ({ destinations }) => {
           position: dest,
           map,
           icon: {
-            url: 'Ambulance.png',
-            scaledSize: new window.google.maps.Size(35, 35),
+            url: 'Carecenter.png',
+            scaledSize: new window.google.maps.Size(35, 45),
           },
         });
       });
