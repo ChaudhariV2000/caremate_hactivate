@@ -57,7 +57,7 @@ cron.schedule('* * * * *', async () => {
       console.error('Error sending SMS:', error);
     }
     try {
-      const response = await axios.post('https://bbb2-27-0-59-131.ngrok-free.app/call-user', {
+      const response = await axios.post('https://0875-27-0-59-131.ngrok-free.app/call-user', {
         phone: reminder.phoneNumber,
 
       });
