@@ -41,8 +41,8 @@ const RemindersList = () => {
                     <div key={reminder._id} className="bg-white rounded-lg shadow-lg p-4">
                         <h3 className="text-xl font-semibold">{reminder.title}</h3>
                         <p className="text-gray-700">Type: {reminder.type}</p>
-                        <p className="text-gray-700">Date: {new Date(reminder.date).toLocaleDateString()}</p>
-                        <p className="text-gray-700">Time: {new Date(reminder.time).toLocaleTimeString()}</p>
+                        <p className="text-gray-700">Date: {new Date().toLocaleDateString()}</p>
+                        <p className="text-gray-700">Time: {new Date().toLocaleTimeString()}</p>
                         <p className="text-gray-700">Repeat: {reminder.repeat}</p>
                         <div className="flex justify-between mt-4">
                             <button
