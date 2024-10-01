@@ -5,7 +5,6 @@ import { User, Menu, X, Home, Bell, Users, MessageCircle, Phone, LogOut } from "
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
@@ -15,10 +14,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center text-white text-xl font-bold">
-              <img src="./Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
-              Caremate
-            </Link>
+           <Link to="/" className="flex items-center text-white text-xl font-bold">
+             <img src="/Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
+             Caremate
+           </Link>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
@@ -38,10 +37,10 @@ const Navbar = () => {
                 </button>
                 {isProfileOpen && (
                   <DropdownMenu>
-                    <DropdownItem to="/profile">Edit Profile</DropdownItem>
+                    <DropdownItem to="/profile">View Profile</DropdownItem>
                     <DropdownItem to="/">
                       <LogOut className="mr-1" size={18} />
-                      Logout
+                          Logout
                     </DropdownItem>
                   </DropdownMenu>
                 )}
@@ -68,38 +67,39 @@ const Navbar = () => {
             <MobileNavLink to="/Reminder" icon={<Bell size={18} />}>Set Reminder</MobileNavLink>
             <MobileNavLink to="/cg" icon={<Users size={18} />}>Find Caregivers</MobileNavLink>
             <MobileNavLink to="/" icon={<Phone size={18} />}>Contact Us</MobileNavLink>
-            <MobileNavLink to="/" icon={<User size={18} />}>Profile</MobileNavLink>
+            <MobileNavLink to="/profile" icon={<User size={18} />}>Profile</MobileNavLink>
+            <MobileNavLink to="/Emergency_page" icon={<User size={18} />}>Emergency</MobileNavLink>
           </div>
         </div>
-      )}
+        )}
     </nav>
-  );
+    );
 };
 
-const NavLink = ({ to, children, icon }) => (
-  <Link to={to} className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
-    {icon}
-    {children}
-  </Link>
-);
+    const NavLink = ({ to, children, icon }) => (
+        <Link to={to} className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+            {icon}
+            {children}
+        </Link>
+    );
 
-const MobileNavLink = ({ to, children, icon }) => (
-  <Link to={to} className="flex items-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium">
-    {icon}
-    <span className="ml-2">{children}</span>
-  </Link>
-);
+    const MobileNavLink = ({ to, children, icon }) => (
+        <Link to={to} className="flex items-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium">
+            {icon}
+            <span className="ml-2">{children}</span>
+        </Link>
+    );
 
-const DropdownMenu = ({ children }) => (
-  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-    {children}
-  </div>
-);
+    const DropdownMenu = ({ children }) => (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+            {children}
+        </div>
+    );
 
-const DropdownItem = ({ to, children }) => (
-  <Link to={to} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-    {children}
-  </Link>
-);
+    const DropdownItem = ({ to, children }) => (
+        <Link to={to} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            {children}
+        </Link>
+    );
 
 export default Navbar;
