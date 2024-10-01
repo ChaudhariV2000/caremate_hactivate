@@ -50,7 +50,7 @@ const ScheduleReminders = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-        <h2 className="text-4xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 font-serif">Schedule Reminders</h2>
+        <h2 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-purple-800">Schedule Reminders</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Username Field */}
           <div className="relative">
@@ -158,7 +158,7 @@ const ScheduleReminders = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-teal-400 text-white py-3 px-4 rounded-md hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out font-semibold text-lg shadow-lg"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-500 text-white py-3 px-4 rounded-md hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out font-semibold text-lg shadow-lg"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

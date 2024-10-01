@@ -15,6 +15,7 @@ import Emergency_page from "./Pages/Emergency_page";
 import Reminder_form from "./Pages/Reminder_form.jsx";
 import RemindersList from './Pages/reminder_list.jsx';
 
+
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -37,7 +38,7 @@ function App() {
     <Router>
       <Helmet>
         <title>Caremate</title>
-        <link rel="icon" type="image/png" href="./Caremate_icon.png" />
+        <link rel="icon" type="image/png" href="Caremate_icon.png" />
       </Helmet>
       <div className="flex flex-col min-h-screen">
         <Navbar openAuthModal={openAuthModal} />
