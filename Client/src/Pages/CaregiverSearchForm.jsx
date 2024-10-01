@@ -221,11 +221,11 @@ const CaregiverSearchForm = ({ onSubmit }) => {
             </button>
           ) : (
             
-            <Link to="/caregivers">
+            
   <button type="button" className={`${buttonClass} bg-green-500 hover:bg-green-600 ml-auto`}>
-    Search for Caregivers
+    <Link to="/caregivers">Search for Caregivers</Link>
   </button>
-</Link>
+
             
           )}
         </div>
