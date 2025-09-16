@@ -26,7 +26,7 @@ const ScheduleReminders = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post('https://0875-27-0-59-131.ngrok-free.app/reminder', formData); // Replace with your actual API endpoint
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/create`, formData); // Replace with your actual API endpoint
 
       // Optionally reset form data after submission
       setFormData({
@@ -35,11 +35,12 @@ const ScheduleReminders = () => {
         type: "",
         date: "",
         time: "",
-        repeat: ""
+        repeat: "",
+        phoneNumber: ""
       });
 
       // Optionally navigate to the reminders list after successful submission
-      navigate("/reminders"); // Adjust the path according to your routing setup
+      navigate("/create"); // Adjust the path according to your routing setup
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
@@ -154,6 +155,28 @@ const ScheduleReminders = () => {
               <option value="never">Never</option>
             </select>
           </div>
+          <div className="relative">
+            <label
+              htmlFor="phone"
+              className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+            >
+              <FaHeading className="inline mr-1" />Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              className="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+              placeholder="Enter 10-digit phone number"
+              pattern="[0-9]{10}"       // Regex to enforce exactly 10 digits
+              maxLength={10}            // Prevent typing more than 10 digits
+              required                  // Make it mandatory
+            />
+          </div>
+
+
 
           {/* Submit Button */}
           <button
@@ -178,7 +201,7 @@ const ScheduleReminders = () => {
         {/* Link to Reminders List */}
         <div className="mt-4">
           <button
-            onClick={() => navigate("/reminders")} // Add onClick to navigate
+            onClick={() => navigate("/getAllReminder")} // Add onClick to navigate
             className="w-full bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition duration-200 ease-in-out font-semibold text-lg shadow-md"
           >
             View Reminders List

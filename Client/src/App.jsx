@@ -53,8 +53,9 @@ function App() {
             <Route path="/Signup" element={<AuthModal />} />
             <Route path="/Emergency_page" element={<Emergency_page />} />
             <Route path="/Reminder" element={<Reminder_form />} />
-            <Route path="/reminders" element={<RemindersList />} />
+            <Route path="/getAllReminder" element={<RemindersList />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/create" element={<RemindersList />} />
           </Routes>
         </main>
         <Footer />

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<script>
+    function start() {
+        var req = new window.XMLHttpRequest();
+        req.open("GET", "page1.xml", true);
+        req.send();
+        req.onreadystatechange = function () {
+            if (req.status == 200 && req.readyState == 4) {
+                var xml = req.responseXML
+                var names = xml.getElementsByTagName("name");
+                alert(names)
+                var panel = document.getElementById("ved")
+                for (var i = 0; i < names.length; i++)
+                    panel.innerHTML += "<br>" + names[i].textContent;
+            }
+        }
+
+    }
+</script>
+
+<body>
+    <button type="submit" onclick="start()">Start</button>
+    <span id="ved"></span>
+</body>
+
+</html>

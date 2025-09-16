@@ -6,27 +6,43 @@ const Room = () => {
   const { roomId } = useParams();
 
   const myMeeting = async (element) => {
-    const appID = 1122569529;
-    const ServerSecret = "c419d589f3561e8a702006e9ca297130";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, ServerSecret, roomId, Date.now().toString(), "Ocean");
-    const zc = ZegoUIKitPrebuilt.create(kitToken);
-    zc.joinRoom({
+    const appID = 739996763;// 1122569529;
+    const serverSecret = "dce929ef61dd0e7156086609cfd98a27";//"c419d589f3561e8a702006e9ca297130";
+    const userID = Date.now().toString();
+    const userName = "Vedant";
+
+    // Generate kit token
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      roomId,
+      userID,
+      userName
+
+    );
+
+    // Create instance and join room
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({
       container: element,
       sharedLinks: [
         {
           name: "Copy Link",
-          url: `http://localhost:5173/room/${roomId}`,
+          url: `${window.location.origin}/room/${roomId}`,
         }
       ],
       scenario: {
         mode: ZegoUIKitPrebuilt.OneONoneCall,
       },
+      showScreenSharingButton: true,
+      showTextChat: true,
+      showUserList: true,
     });
   };
 
   return (
     <div className='mt-2 mb-5'>
-      <div ref={myMeeting} />
+      <div ref={myMeeting} style={{ width: '100%', height: '100vh' }} />
     </div>
   )
 }

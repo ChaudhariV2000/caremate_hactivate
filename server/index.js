@@ -1,80 +1,100 @@
-require('dotenv').config({ path: './database/.env' });
-const express = require("express");
-const connectDB = require("./database/db");
-const cors = require("cors");
-const cron = require('node-cron');
-const twilio = require('twilio');
-const axios = require('axios');
-const { Reminder } = require("./Model/user_model")
+require('dotenv').config();
+const express = require('express');
+const connectDB = require('./src/config/db');
+const morgan = require('morgan');
+const cors = require('cors');
+const Reminder = require('./src/Model/reminder'); // Add this import
 
 const app = express();
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: 'GET,POST',
-  allowedHeaders: 'Content-Type',
-};
-
-
-// Middleware
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(morgan('dev'));
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173'
+}));
 
-// Connect to the database
+// Connect to database
 connectDB();
 
-// Routes
-app.use("/", require("./Routes/authroutes"));
+// Import custom scheduler
+const scheduler = require('./src/Jobs/customScheduler');
 
-//--------
+// Mount routes
+app.use('/', require('./src/Routes/authroutes'));
+app.use('/', require('./src/Routes/reminderRoutes'));
+app.use('/', require('./src/Routes/twillioRoutes'));
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
-const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
-const twilioClient = twilio(accountSid, authToken);
+// ✅ ADD TEST ENDPOINTS HERE (BEFORE startServer)
+// Test endpoint to create immediate reminder
+app.post('/api/test-reminder-now', async (req, res) => {
+  try {
+    // Create a reminder that runs in 10 seconds
+    const runAt = new Date(Date.now() + 10000);
 
-// Twilio phone number
-const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+    const testReminder = new Reminder({
+      username: 'test-user',
+      title: 'Test Reminder',
+      phoneNumber: '+919860173150', // Your number
+      type: 'medication',
+      date: runAt,
+      time: runAt.toTimeString().split(' ')[0],
+      repeat: 'never'
+    });
 
-cron.schedule('* * * * *', async () => {
-  const now = new Date();
-  const reminders = await Reminder.find({
-    date: { $lte: now },
-    completed: false,
-  });
+    await testReminder.save();
+    await scheduler.scheduleReminder(testReminder._id.toString(), runAt);
 
-  for (const reminder of reminders) {
-    console.log(`Reminder: ${reminder.title} - Time: ${reminder.time}`);
-
-
-    try {
-      await twilioClient.messages.create({
-        body: `Reminder: ${reminder.title} - Time: ${reminder.time}`,
-        from: twilioPhoneNumber,
-        to: "+919860173150" // Replace with actual user phone number from the reminder
-      });
-
-      console.log(`SMS sent to ${reminder.userPhoneNumber}`);
-    } catch (error) {
-      console.error('Error sending SMS:', error);
-    }
-    try {
-      const response = await axios.post('https://0875-27-0-59-131.ngrok-free.app/call-user', {
-        phone: reminder.phoneNumber,
-
-      });
-
-      console.log(`Route /user-route called successfully for ${reminder.userPhoneNumber}. Response:`, response.data);
-    } catch (error) {
-      console.error('Error calling user route:', error);
-    }
-
-    reminder.completed = true;
-    await reminder.save();
+    res.json({
+      success: true,
+      reminderId: testReminder._id,
+      willRunAt: runAt,
+      message: 'Test reminder scheduled to run in 10 seconds'
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Get all scheduled jobs
+app.get('/api/scheduled-jobs', (req, res) => {
+  try {
+    const jobs = scheduler.getScheduledJobs();
+    res.json({
+      success: true,
+      count: jobs.length,
+      jobs: jobs
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+// Force run a specific reminder
+app.post('/api/force-run-reminder/:id', async (req, res) => {
+  try {
+    await scheduler.runReminder(req.params.id);
+    res.json({ success: true, message: 'Reminder executed manually' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+
+async function startServer() {
+  try {
+    // Load existing reminders on startup
+    await scheduler.loadScheduledReminders();
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+
+    });
+
+  } catch (err) {
+    console.error('❌ Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+startServer();

@@ -7,7 +7,8 @@ const RemindersList = () => {
     useEffect(() => {
         const fetchReminders = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/reminder"); // Adjust the URL as needed
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getAllReminder`); // Adjust the URL as needed
+                // console.log(response.data)
                 setReminders(response.data);
             } catch (error) {
                 console.error("Error fetching reminders:", error);
@@ -19,8 +20,7 @@ const RemindersList = () => {
 
     const handleDelete = async (id) => {
         try {
-            alert(id)
-            await axios.delete(`https://f8ae-27-0-59-131.ngrok-free.app/reminder/${id}`);
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/reminder/${id}`);
 
             setReminders(reminders.filter((reminder) => reminder._id !== id)); // Update state to remove deleted reminder
         } catch (error) {
@@ -41,8 +41,9 @@ const RemindersList = () => {
                     <div key={reminder._id} className="bg-white rounded-lg shadow-lg p-4">
                         <h3 className="text-xl font-semibold">{reminder.title}</h3>
                         <p className="text-gray-700">Type: {reminder.type}</p>
-                        <p className="text-gray-700">Date: {new Date().toLocaleDateString()}</p>
-                        <p className="text-gray-700">Time: {new Date().toLocaleTimeString()}</p>
+                        <p className="text-gray-700">Date: {new Date(reminder.date).toISOString().split('T')[0]}
+                        </p>
+                        <p className="text-gray-700">Time: {reminder.time}</p>
                         <p className="text-gray-700">Repeat: {reminder.repeat}</p>
                         <div className="flex justify-between mt-4">
                             <button

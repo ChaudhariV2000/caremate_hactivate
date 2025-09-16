@@ -7,7 +7,7 @@ const MapComponent = () => {
 
   useEffect(() => {
     const googleMapScript = document.createElement('script');
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDCKbhS2pPvk5Er_xB-9VGl-9KWvL_wSDs&libraries=places`;
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDjTch6qQCZMrpH_Sjr6tFPm_grWwGI0ZM&libraries=places`;
     googleMapScript.async = true;
     googleMapScript.defer = true;
     window.document.body.appendChild(googleMapScript);
@@ -28,9 +28,16 @@ const MapComponent = () => {
 
   useEffect(() => {
     if (mapLoaded && mapRef.current) {
+      const center = { lat: 28.6139, lng: 77.2090 }; // Mumbai's coordinates
       const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 28.6139, lng: 77.2090 }, // Mumbai's coordinates
+        center: center,
         zoom: 15,
+      });
+
+      // Add a marker at the center
+      new window.google.maps.Marker({
+        position: center,
+        map: map,
       });
 
       map.addListener('click', (event) => {
