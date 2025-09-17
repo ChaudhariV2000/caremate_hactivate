@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const CaregiverRegistrationForm = () => {
   const [formData, setFormData] = useState({
-    _id:'50',
+    _id: '50',
     name: '',
     age: '',
     experience: '',
@@ -35,7 +35,7 @@ const CaregiverRegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/setCaregivers', formData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/setCaregivers`, formData);
       console.log('Caregiver registered:', response.data);
       // Handle successful registration (e.g., show success message, redirect)
     } catch (error) {
