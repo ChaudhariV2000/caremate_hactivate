@@ -3,7 +3,7 @@ const express = require('express');
 const connectDB = require('./src/config/db');
 const morgan = require('morgan');
 const cors = require('cors');
-const Reminder = require('./src/Model/reminder'); // Add this import
+const Reminder = require('./src/Model/reminder');
 
 const app = express();
 app.use(express.json());
@@ -30,6 +30,7 @@ const scheduler = require('./src/Jobs/customScheduler');
 app.use('/', require('./src/Routes/authroutes'));
 app.use('/', require('./src/Routes/reminderRoutes'));
 app.use('/', require('./src/Routes/twillioRoutes'));
+app.use('/', require('./src/Routes/careGiversRoute'));
 
 // ✅ ADD TEST ENDPOINTS HERE (BEFORE startServer)
 // Test endpoint to create immediate reminder

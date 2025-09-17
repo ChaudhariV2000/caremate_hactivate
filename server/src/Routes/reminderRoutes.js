@@ -2,9 +2,13 @@ const express = require('express');
 const router = express.Router();
 const reminderController = require('../Controller/reminderController');
 const Reminder = require('../Model/reminder')
+
 router.post('/create', reminderController.createReminder);
+
 router.get('/getAllReminder', reminderController.getAllReminders);
+
 router.put('/updateReminder/:id', reminderController.updateReminder);
+
 router.delete("/reminder/:id", async (req, res) => {
     try {
         const deletedReminder = await Reminder.findByIdAndDelete(req.params.id);

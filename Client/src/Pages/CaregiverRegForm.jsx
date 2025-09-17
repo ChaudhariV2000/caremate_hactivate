@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const CaregiverRegistrationForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     _id: '50',
     name: '',
@@ -35,7 +36,9 @@ const CaregiverRegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/setCaregivers`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/addCaregivers`, formData);
+      alert("Caregiver registered Succesfully")
+      navigate('/')
       console.log('Caregiver registered:', response.data);
       // Handle successful registration (e.g., show success message, redirect)
     } catch (error) {

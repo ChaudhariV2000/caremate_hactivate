@@ -14,6 +14,7 @@ import Profile from "./Pages/Profile.jsx";
 import Emergency_page from "./Pages/Emergency_page";
 import Reminder_form from "./Pages/Reminder_form.jsx";
 import RemindersList from './Pages/reminder_list.jsx';
+import CaregiversResults from './Pages/CaregiversResults.jsx';
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
             <Route path="/Video" element={<Video />} />
             <Route path="/room/:roomId" element={<Room />} />
             <Route path="/cg" element={<CaregiverSearchForm />} />
-            <Route path="/caregivers" element={<CG_page />} />
+            {/* <Route path="/caregivers" element={<CG_page />} /> */}
             <Route path="/cg_reg" element={<CaregiverRegForm />} />
             <Route path="/Signup" element={<AuthModal />} />
             <Route path="/Emergency_page" element={<Emergency_page />} />
@@ -56,6 +57,9 @@ function App() {
             <Route path="/getAllReminder" element={<RemindersList />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/create" element={<RemindersList />} />
+
+            {/* <Route path="/search" element={<CaregiverSearchForm />} /> */}
+            <Route path="/caregivers" element={<CaregiversResults />} />
           </Routes>
         </main>
         <Footer />

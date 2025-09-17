@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import MapComp from "../Component/MapComponent"
+import { Link, useNavigate } from "react-router-dom";
+import MapComp from "../Component/MapComponent";
+import axios from 'axios';
 
-const CaregiverSearchForm = ({ onSubmit }) => {
+const CaregiverSearchForm = () => {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -41,9 +45,44 @@ const CaregiverSearchForm = ({ onSubmit }) => {
   const handleNextStep = () => setStep(step + 1);
   const handlePreviousStep = () => setStep(step - 1);
 
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/search`,
+        {
+          specialties: formData.specialties,
+          maxHourlyRate: formData.maxHourlyRate,
+          languages: formData.languages,
+          availability: formData.availability,
+          location: formData.location
+        }
+      );
+
+      if (response.data.success) {
+        // Navigate to results page with the data
+        navigate('/caregivers', {
+          state: {
+            caregivers: response.data.caregivers,
+            searchCriteria: formData
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      alert("Error searching for caregivers. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    if (step === 4) {
+      handleSearch();
+    } else {
+      handleNextStep();
+    }
   };
 
   const renderStepIndicator = () => (
@@ -60,192 +99,189 @@ const CaregiverSearchForm = ({ onSubmit }) => {
 
   return (
     <div>
-    <div className="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Find Your Ideal Caregiver</h2>
-      {renderStepIndicator()}
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {step === 1 && (
-          <div className="space-y-4">
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700" htmlFor="name">Your Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className={inputClass}
-                placeholder="Enter your full name"
-              />
-            </div>
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700" htmlFor="age">Your Age</label>
-              <input
-                type="number"
-                id="age"
-                name="age"
-                value={formData.age}
-                onChange={handleInputChange}
-                required
-                min="0"
-                className={inputClass}
-                placeholder="Enter your age"
-              />
-            </div>
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700">Care Recipient</label>
-              <select
-                name="relationToPatient"
-                value={formData.relationToPatient}
-                onChange={handleInputChange}
-                className={inputClass}
-              >
-                <option value="self">Myself</option>
-                <option value="family">Family Member</option>
-              </select>
-            </div>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div className="space-y-4">
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700" htmlFor="location">Your Location</label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                className={inputClass}
-                placeholder="e.g., Mumbai, Maharashtra"
-              />
-            </div>
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700">Point Your Location on Map</label>
-              <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-                <MapComp/>
+      <div className="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Find Your Ideal Caregiver</h2>
+        {renderStepIndicator()}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {step === 1 && (
+            <div className="space-y-4">
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700" htmlFor="name">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className={inputClass}
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700" htmlFor="age">Your Age</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  required
+                  min="0"
+                  className={inputClass}
+                  placeholder="Enter your age"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700">Care Recipient</label>
+                <select
+                  name="relationToPatient"
+                  value={formData.relationToPatient}
+                  onChange={handleInputChange}
+                  className={inputClass}
+                >
+                  <option value="self">Myself</option>
+                  <option value="family">Family Member</option>
+                </select>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {step === 3 && (
-          <div>
-            <label className="block mb-4 font-semibold text-gray-700">Required Specialties</label>
-            <div className="grid grid-cols-2 gap-4">
-              {['Elderly Care', 'Dementia Care', 'Alzheimers Care', 'Physical Therapy', 'Occupational Therapy', 'Speech Therapy', 'Home Health Aide', 'Companionship Care', 'Live-In Care', 'Respite Care'].map(specialty => (
-                <div key={specialty} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={specialty}
-                    name="specialties"
-                    value={specialty}
-                    checked={formData.specialties.includes(specialty)}
-                    onChange={handleCheckboxChange}
-                    className={checkboxClass}
-                  />
-                  <label htmlFor={specialty} className="ml-2 text-gray-700">{specialty}</label>
+          {step === 2 && (
+            <div className="space-y-4">
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700" htmlFor="location">Your Location</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  className={inputClass}
+                  placeholder="e.g., Mumbai, Maharashtra"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700">Point Your Location on Map</label>
+                <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+                  <MapComp />
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {step === 4 && (
-          <div className="space-y-6">
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700" htmlFor="maxHourlyRate">Maximum Hourly Rate (₹)</label>
-              <input
-                type="number"
-                id="maxHourlyRate"
-                name="maxHourlyRate"
-                value={formData.maxHourlyRate}
-                onChange={handleInputChange}
-                min="0"
-                className={inputClass}
-                placeholder="Enter maximum hourly rate"
-              />
-            </div>
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700">Required Languages</label>
-              <div className="grid grid-cols-3 gap-4">
-                {['Hindi', 'English', 'Bengali', 'Tamil', 'Telugu', 'Marathi', 'Other'].map(language => (
-                  <div key={language} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={language}
-                      name="languages"
-                      value={language}
-                      checked={formData.languages.includes(language)}
-                      onChange={handleCheckboxChange}
-                      className={checkboxClass}
-                    />
-                    <label htmlFor={language} className="ml-2 text-gray-700">{language}</label>
-                  </div>
-                ))}
               </div>
             </div>
+          )}
+
+          {step === 3 && (
             <div>
-              <label className="block mb-2 font-semibold text-gray-700">Availability Required</label>
+              <label className="block mb-4 font-semibold text-gray-700">Required Specialties</label>
               <div className="grid grid-cols-2 gap-4">
-                {['Daily', 'All Day', 'Mornings', 'Evenings', 'Weekdays', 'Weekends'].map(time => (
-                  <div key={time} className="flex items-center">
+                {['Elderly Care', 'Dementia Care', 'Alzheimers Care', 'Physical Therapy', 'Occupational Therapy', 'Speech Therapy', 'Home Health Aide', 'Companionship Care', 'Live-In Care', 'Respite Care'].map(specialty => (
+                  <div key={specialty} className="flex items-center">
                     <input
                       type="checkbox"
-                      id={time}
-                      name="availability"
-                      value={time}
-                      checked={formData.availability.includes(time)}
+                      id={specialty}
+                      name="specialties"
+                      value={specialty}
+                      checked={formData.specialties.includes(specialty)}
                       onChange={handleCheckboxChange}
                       className={checkboxClass}
                     />
-                    <label htmlFor={time} className="ml-2 text-gray-700">{time}</label>
+                    <label htmlFor={specialty} className="ml-2 text-gray-700">{specialty}</label>
                   </div>
                 ))}
               </div>
             </div>
+          )}
+
+          {step === 4 && (
+            <div className="space-y-6">
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700" htmlFor="maxHourlyRate">Maximum Hourly Rate (₹)</label>
+                <input
+                  type="number"
+                  id="maxHourlyRate"
+                  name="maxHourlyRate"
+                  value={formData.maxHourlyRate}
+                  onChange={handleInputChange}
+                  min="0"
+                  className={inputClass}
+                  placeholder="Enter maximum hourly rate"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700">Required Languages</label>
+                <div className="grid grid-cols-3 gap-4">
+                  {['Hindi', 'English', 'Bengali', 'Tamil', 'Telugu', 'Marathi', 'Other'].map(language => (
+                    <div key={language} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={language}
+                        name="languages"
+                        value={language}
+                        checked={formData.languages.includes(language)}
+                        onChange={handleCheckboxChange}
+                        className={checkboxClass}
+                      />
+                      <label htmlFor={language} className="ml-2 text-gray-700">{language}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold text-gray-700">Availability Required</label>
+                <div className="grid grid-cols-2 gap-4">
+                  {['Daily', 'All Day', 'Mornings', 'Evenings', 'Weekdays', 'Weekends'].map(time => (
+                    <div key={time} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={time}
+                        name="availability"
+                        value={time}
+                        checked={formData.availability.includes(time)}
+                        onChange={handleCheckboxChange}
+                        className={checkboxClass}
+                      />
+                      <label htmlFor={time} className="ml-2 text-gray-700">{time}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-between mt-8">
+            {step > 1 && (
+              <button type="button" onClick={handlePreviousStep} className={`${buttonClass} bg-gray-500 hover:bg-gray-600`}>
+                Previous
+              </button>
+            )}
+            {step < 4 ? (
+              <button type="submit" className={`${buttonClass} bg-blue-500 hover:bg-blue-600 ${step > 1 ? 'ml-4' : 'ml-auto'}`}>
+                Next
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={loading}
+                className={`${buttonClass} bg-green-500 hover:bg-green-600 ml-auto ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {loading ? 'Searching...' : 'Search for Caregivers'}
+              </button>
+            )}
           </div>
-        )}
+        </form>
+      </div>
 
-        <div className="flex justify-between mt-8">
-          {step > 1 && (
-            <button type="button" onClick={handlePreviousStep} className={`${buttonClass} bg-gray-500 hover:bg-gray-600`}>
-              Previous
-            </button>
-          )}
-          {step < 4 ? (
-            <button type="button" onClick={handleNextStep} className={`${buttonClass} bg-blue-500 hover:bg-blue-600 ${step > 1 ? 'ml-4' : 'ml-auto'}`}>
-              Next
-            </button>
-          ) : (
-            
-            
-  <button type="button" className={`${buttonClass} bg-green-500 hover:bg-green-600 ml-auto`}>
-    <Link to="/caregivers">Search for Caregivers</Link>
-  </button>
-
-            
-          )}
-        </div>
-      </form>
-
-      
+      <div className="flex justify-center max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
+        <Link
+          to="/cg_reg"
+          className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        >
+          <button className="bg-white text-gray-800 py-2 px-6 rounded-full text-lg hover:bg-gray-200 transition duration-300">
+            Are you a care giver yourself? click here to be a part of Caremate
+          </button>
+        </Link>
+      </div>
     </div>
-    <div className="flex justify-center max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl">
-    <Link
-            to="/cg_reg" // Using Link instead of anchor tag
-            className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-          >
-            
-            <button className="bg-white text-gray-800 py-2 px-6 rounded-full text-lg hover:bg-gray-200 transition duration-300">
-              Are you a care giver yourself? click here to be a part of Caremate
-            </button>
-  </Link>
-  </div></div>
-
-    
   );
 };
 
