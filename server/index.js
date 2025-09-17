@@ -12,7 +12,13 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173'
 }));
 
-// Connect to database
+app.use(cors({
+  origin: "http://localhost:5173",  // Vite dev server
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+
 connectDB();
 
 // Import custom scheduler
