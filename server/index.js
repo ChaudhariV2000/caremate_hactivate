@@ -13,7 +13,9 @@ app.use(cors({
 }));
 
 app.use(cors({
-  origin: "http://localhost:5173",  // Vite dev server
+  origin: ["http://localhost:5173",
+    "https://caremate-hactivate-frontend.onrender.com"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));

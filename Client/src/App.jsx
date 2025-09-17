@@ -8,7 +8,7 @@ import CaregiverSearchForm from "./Pages/CaregiverSearchForm.jsx";
 import AuthModal from "./Pages/Signup_login.jsx"
 import Navbar from "./Component/Navbar";
 import Footer from "./Component/Footer";
-import Video from "./Pages/video";
+import Video from "./Pages/Video";
 import Room from "./Pages/Room";
 import Profile from "./Pages/Profile.jsx";
 import Emergency_page from "./Pages/Emergency_page";
