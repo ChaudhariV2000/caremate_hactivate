@@ -34,13 +34,13 @@ class CustomScheduler {
             status: 'scheduled'
         });
 
-        console.log(`⏰ Scheduled reminder ${reminderId} to run at ${runAt}`);
+        console.log(`--------Scheduled reminder ${reminderId} to run at ${runAt}`);
     }
 
     // Run a reminder immediately
     async runReminder(reminderId) {
         try {
-            console.log(`🎯 Running reminder: ${reminderId}`);
+            console.log(`-----Running reminder: ${reminderId}`);
 
             const reminder = await Reminder.findById(reminderId);
             if (!reminder || reminder.completed) {
@@ -49,28 +49,26 @@ class CustomScheduler {
                 return;
             }
 
-            // ✅ CHECK IF JOB IS ALREADY RUNNING TO PREVENT DUPLICATES
             const job = this.jobs.get(reminderId);
             if (job && job.status === 'running') {
                 console.log(`⏸️  Reminder ${reminderId} is already running, skipping`);
                 return;
             }
 
-            // ✅ MARK AS RUNNING
             if (job) {
                 job.status = 'running';
             }
 
             // Send SMS
-            console.log(`📱 Sending SMS to: ${reminder.phoneNumber}`);
-            await twilioClient.messages.create({
-                body: `Reminder: ${reminder.title} - Time: ${reminder.date.toLocaleString()}`,
-                from: process.env.TWILIO_PHONE_NUMBER,
-                to: reminder.phoneNumber,
-            });
+            // console.log(`📱 Sending SMS to: ${reminder.phoneNumber}`);
+            // await twilioClient.messages.create({
+            //     body: `Reminder: ${reminder.title} - Time: ${reminder.date.toLocaleString()}`,
+            //     from: process.env.TWILIO_PHONE_NUMBER,
+            //     to: reminder.phoneNumber,
+            // });
 
             // Make phone call
-            console.log(`📞 Making call to: ${reminder.phoneNumber}`);
+            console.log(`----------- Making call to: ${reminder.phoneNumber}`);
             await twilioClient.calls.create({
                 to: reminder.phoneNumber,
                 from: process.env.TWILIO_PHONE_NUMBER,
@@ -81,35 +79,34 @@ class CustomScheduler {
             // Handle repetition
             if (reminder.repeat && reminder.repeat !== "none") {
                 let nextDate = new Date(reminder.date);
-                if (reminder.repeat === "daily") nextDate.setDate(nextDate.getDate() + 1);
-                else if (reminder.repeat === "weekly") nextDate.setDate(nextDate.getDate() + 7);
-                else if (reminder.repeat === "monthly") nextDate.setMonth(nextDate.getMonth() + 1);
-                else if (reminder.repeat === "never") {
+                if (reminder.repeat === "never") {
                     try {
+                        reminder.completed = true;
+                        await reminder.save();
+                        console.log(`Reminder ${reminderId} marked as completed`);
                         const res = await axios.delete(`${process.env.BASE_URL}/reminder/${reminder._id}`);
-                        console.log(res.data);
                     } catch (err) {
                         console.error("Error calling backend delete:", err);
                     }
+                } else {
+                    if (reminder.repeat === "daily") nextDate.setDate(nextDate.getDate() + 1);
+                    else if (reminder.repeat === "weekly") nextDate.setDate(nextDate.getDate() + 7);
+                    else if (reminder.repeat === "monthly") nextDate.setMonth(nextDate.getMonth() + 1);
+                    else if (reminder.repeat === "yearly") nextDate.setFullYear(nextDate.getFullYear() + 1);
+
+
+                    reminder.date = nextDate;
+                    await reminder.save();
+
+
+                    await this.scheduleReminder(reminder._id.toString(), nextDate);
+                    console.log(`-------------Scheduled next reminder for: ${nextDate}`);
                 }
-
-
-                reminder.date = nextDate;
-                await reminder.save();
-
-                // Reschedule
-                await this.scheduleReminder(reminder._id.toString(), nextDate);
-                console.log(`🔄 Scheduled next reminder for: ${nextDate}`);
             } else {
                 reminder.completed = true;
                 await reminder.save();
                 console.log(`🎯 Reminder ${reminderId} marked as completed`);
-                // try {
-                //     const res = await axios.delete(`${process.env.BASE_URL}/reminder/${reminder._id}`);
-                //     console.log(res.data);
-                // } catch (err) {
-                //     console.error("Error calling backend delete:", err);
-                // }
+
             }
 
             console.log(`✅ Completed reminder: ${reminderId}`);

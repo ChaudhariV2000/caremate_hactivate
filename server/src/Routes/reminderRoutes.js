@@ -21,6 +21,22 @@ router.delete("/reminder/:id", async (req, res) => {
 
     }
 });
+router.get('/status', async (req, res) => {
+    try {
+
+        res.status(200).json({
+            status: "ok",
+            database: "connected",
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            database: "disconnected",
+            error: error.message
+        });
+    }
+});
 
 
 module.exports = router;

@@ -47,7 +47,7 @@ exports.searchCaregivers = async (req, res) => {
             location
         } = req.body;
 
-        y
+
         let query = {};
 
         if (specialties && specialties.length > 0) {
