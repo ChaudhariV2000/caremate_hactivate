@@ -37,7 +37,6 @@ exports.createCaregiver = async (req, res) => {
     }
 }
 
-// Search caregivers based on criteria
 exports.searchCaregivers = async (req, res) => {
     try {
         const {
@@ -48,10 +47,9 @@ exports.searchCaregivers = async (req, res) => {
             location
         } = req.body;
 
-        // Build search query
+        y
         let query = {};
 
-        // Filter by specialties (if any are selected)
         if (specialties && specialties.length > 0) {
             query.specialties = { $in: specialties };
         }

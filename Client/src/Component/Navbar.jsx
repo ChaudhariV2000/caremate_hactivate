@@ -1,24 +1,45 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { User, Menu, X, Home, Bell, Users, MessageCircle, Phone, LogOut, Settings } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, Menu, X, Home, Bell, Users, MessageCircle, LogOut, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    navigate("/");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="bg-gradient-to-r from-indigo-900 to-purple-900 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
-           <Link to="/" className="flex items-center text-white text-xl font-bold">
-             <img src="/Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
-             Caremate
-           </Link>
+            <Link to="/" className="flex items-center text-white text-xl font-bold">
+              <img src="/Caremate_icon.png" alt="Caremate Logo" className="h-8 w-8 mr-2" />
+              Caremate
+            </Link>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-6">
@@ -26,7 +47,7 @@ const Navbar = () => {
               <NavLink to="/Reminder" icon={<Bell className="mr-2" size={20} />}>Reminders</NavLink>
               <NavLink to="/cg" icon={<Users className="mr-2" size={20} />}>Caregivers</NavLink>
               <NavLink to="/Video" icon={<MessageCircle className="mr-2" size={20} />}>Contact</NavLink>
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button onClick={toggleProfile} className="flex items-center text-white hover:bg-white hover:bg-opacity-20 px-4 py-2 rounded-md text-lg font-medium focus:outline-none transition duration-150 ease-in-out">
                   <User className="mr-2" size={20} />
                   Profile
@@ -34,8 +55,19 @@ const Navbar = () => {
                 <AnimatePresence>
                   {isProfileOpen && (
                     <DropdownMenu>
-                      <DropdownItem to="/profile" icon={<Settings size={18} />}>View Profile</DropdownItem>
-                      <DropdownItem to="/" icon={<LogOut size={18} />}>Logout</DropdownItem>
+                      <DropdownItem to="/profile" icon={<Settings size={18} />} onClick={() => setIsProfileOpen(false)}>
+                        View Profile
+                      </DropdownItem>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsProfileOpen(false);
+                        }}
+                        className="flex w-full items-center px-4 py-2 hover:bg-gray-100 text-left text-white"
+                      >
+                        <LogOut size={18} className="mr-2" />
+                        Logout
+                      </button>
                     </DropdownMenu>
                   )}
                 </AnimatePresence>
@@ -88,7 +120,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </nav>
-    );
+  );
 };
 
 const NavLink = ({ to, children, icon }) => (
@@ -117,8 +149,8 @@ const DropdownMenu = ({ children }) => (
   </motion.div>
 );
 
-const DropdownItem = ({ to, children, icon }) => (
-  <Link to={to} className="flex items-center px-4 py-2 text-lg text-white hover:bg-indigo-700">
+const DropdownItem = ({ to, children, icon, onClick }) => (
+  <Link to={to} onClick={onClick} className="flex items-center px-4 py-2 text-lg text-white hover:bg-indigo-700">
     {icon}
     <span className="ml-2">{children}</span>
   </Link>

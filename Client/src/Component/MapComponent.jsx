@@ -7,7 +7,7 @@ const MapComponent = () => {
 
   useEffect(() => {
     const googleMapScript = document.createElement('script');
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDjTch6qQCZMrpH_Sjr6tFPm_grWwGI0ZM&libraries=places`;
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_MAPS_API}&libraries=places`;
     googleMapScript.async = true;
     googleMapScript.defer = true;
     window.document.body.appendChild(googleMapScript);

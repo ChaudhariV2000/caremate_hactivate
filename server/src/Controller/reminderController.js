@@ -54,23 +54,22 @@ exports.updateReminder = async (req, res) => {
     try {
         console.log("✏️ Update reminder request received:", req.body);
 
-        const { id } = req.params; // reminder ID from URL
+        const { id } = req.params;
         const { title, phoneNumber, type, time, date, repeat } = req.body;
 
-        // Parse new date/time if provided
+
         let when;
         if (date && time) {
             const dateTimeString = `${date}T${time}:00`;
             when = new Date(dateTimeString);
         }
 
-        // Format phone number if updated
+
         let formattedPhone = phoneNumber;
         if (phoneNumber && phoneNumber.length === 10 && !phoneNumber.startsWith('+')) {
             formattedPhone = `+91${phoneNumber}`;
         }
 
-        // Update reminder in DB
         const updatedReminder = await Reminder.findByIdAndUpdate(
             id,
             {
@@ -80,17 +79,16 @@ exports.updateReminder = async (req, res) => {
                 ...(when && { date: when, time }),
                 ...(repeat && { repeat })
             },
-            { new: true } // return updated doc
+            { new: true }
         );
 
         if (!updatedReminder) {
             return res.status(404).json({ success: false, message: 'Reminder not found' });
         }
 
-        // ✅ Reschedule if time changed
         if (when) {
-            await scheduler.cancelReminder(id); // cancel old job
-            await scheduler.scheduleReminder(id, when); // schedule new one
+            await scheduler.cancelReminder(id);
+            await scheduler.scheduleReminder(id, when);
         }
 
         res.status(200).json({

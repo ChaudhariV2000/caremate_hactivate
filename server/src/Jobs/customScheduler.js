@@ -104,12 +104,12 @@ class CustomScheduler {
                 reminder.completed = true;
                 await reminder.save();
                 console.log(`🎯 Reminder ${reminderId} marked as completed`);
-                try {
-                    const res = await axios.delete(`${process.env.BASE_URL}/reminder/${reminder._id}`);
-                    console.log(res.data);
-                } catch (err) {
-                    console.error("Error calling backend delete:", err);
-                }
+                // try {
+                //     const res = await axios.delete(`${process.env.BASE_URL}/reminder/${reminder._id}`);
+                //     console.log(res.data);
+                // } catch (err) {
+                //     console.error("Error calling backend delete:", err);
+                // }
             }
 
             console.log(`✅ Completed reminder: ${reminderId}`);

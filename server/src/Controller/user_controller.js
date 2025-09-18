@@ -16,7 +16,6 @@ const register = async (req, res) => {
     });
     await newUser.save();
 
-    // Return user data and token on registration
     const token = jwt.sign({ User: newUser }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
     res.status(201).json({
@@ -47,7 +46,6 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ User: user }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    // Return user data along with token
     res.json({
       token,
       user: {
@@ -77,5 +75,4 @@ const getProfile = async (req, res) => {
   }
 };
 
-// Export all functions
 module.exports = { register, login, getProfile };

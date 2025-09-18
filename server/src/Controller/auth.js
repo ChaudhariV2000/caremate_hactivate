@@ -4,7 +4,7 @@ const { User } = require('../Model/user_model');
 const authenticateToken = async (req, res, next) => {
     try {
         const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+        const token = authHeader && authHeader.split(' ')[1];
 
         if (!token) {
             return res.status(401).json({ message: 'Access denied. No token provided.' });
@@ -17,8 +17,8 @@ const authenticateToken = async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid token. User not found.' });
         }
 
-        req.user = user; // Add user to request object
-        next(); // Continue to the next middleware/route
+        req.user = user;
+        next();
     } catch (error) {
         res.status(403).json({ message: 'Invalid or expired token.' });
     }

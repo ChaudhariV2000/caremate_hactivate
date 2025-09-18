@@ -61,7 +61,9 @@ const AuthModal = ({ isOpen = true, onClose }) => {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formData);
       console.log('Signup successful:', response.data);
       localStorage.setItem('token', response.data.token);
-      navigate('/');
+      localStorage.setItem('user', response.data.user.name);
+
+      navigate("/");
     } catch (error) {
       console.error('Error signing up:', error.response ? error.response.data : error.message);
       setErrorMessage(error.response ? error.response.data : 'An error occurred during signup');
@@ -87,7 +89,9 @@ const AuthModal = ({ isOpen = true, onClose }) => {
       });
       console.log('Login successful:', response.data);
       localStorage.setItem('token', response.data.token);
-      navigate('/');
+      localStorage.setItem('user', response.data.user.name);
+      // After successful login
+      navigate("/");
     } catch (error) {
       console.error('Error logging in:', error.response ? error.response.data : error.message);
       setErrorMessage(error.response ? error.response.data : 'An error occurred during login');

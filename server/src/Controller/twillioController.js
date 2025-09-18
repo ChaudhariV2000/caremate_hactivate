@@ -31,7 +31,7 @@ exports.voice = async (req, res) => {
         method: 'POST'
     });
 
-    // If user doesn't input, re-prompt (simple fallback)
+
     twiml.redirect(`/voice?reminderId=${reminderId}`);
 
     res.type('text/xml').send(twiml.toString());
@@ -53,7 +53,8 @@ exports.callStatus = async (req, res) => {
     } else if (digit === '2') {
         twiml.say('Please remember to take your medication. Goodbye.');
     } else {
-        twiml.say('Invalid input. Goodbye.');
+        console.log(digit)
+        twiml.say('ThankYou. Goodbye.');
     }
     twiml.hangup();
     res.type('text/xml').send(twiml.toString());

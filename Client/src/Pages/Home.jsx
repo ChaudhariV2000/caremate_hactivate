@@ -1,17 +1,124 @@
 import React, { useState, useEffect } from "react";
-import { FaCalendarAlt, FaVideo, FaHeartbeat, FaBell, FaUserMd } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaCalendarAlt, FaVideo, FaHeartbeat, FaBell, FaUserMd, FaTimes } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
+
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    const hasSeenPopup = localStorage.getItem("hasSeenPopup");
+
+    if (token && user) {
+      // User is logged in and we have user data
+      setIsLoggedIn(true);
+      setUserName(user || "User");
+    } else {
+      // Set demo user if not logged in
+      setUserName("Demo User");
+      setIsLoggedIn(false);
+    }
+
+    // Only show popup if user hasn't seen it before
+    if (!hasSeenPopup) {
+      setShowPopup(true);
+    }
   }, []);
+
+
+
+  const handleClick = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // Already logged in
+      alert("You have already Logged IN")
+      navigate("/cg");
+    } else {
+      // Not logged in
+      navigate("/signup");
+    }
+  };
+
+  const handleLoginDemo = () => {
+    navigate("/Signup");
+    localStorage.setItem("hasSeenPopup", "true");
+    setShowPopup(false);
+  };
+
+  const handleContinueWithoutLogin = () => {
+    localStorage.setItem("hasSeenPopup", "true");
+    setShowPopup(false);
+  };
 
   return (
     <div className="font-sans bg-gradient-to-b from-purple-100 to-pink-100">
+      {/* Demo Instructions Popup */}
+      {showPopup && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="bg-white rounded-lg p-6 max-w-md w-full relative"
+          >
+            <button
+              onClick={handleContinueWithoutLogin}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <FaTimes />
+            </button>
+            <h3 className="text-2xl font-bold text-purple-600 mb-4">Demo Instructions</h3>
+            <p className="text-gray-700 mb-4">
+              This is for Demo Purpose so:
+            </p>
+            <ol className="list-decimal pl-5 text-gray-600 space-y-2">
+              <li>If you don't sign up, you can still access Reminder, Caregivers, Video Call, Emergency, and ChatBot</li>
+              <li>Only if you want to access profile and track daily schedule you need to signup/login</li>
+              <li>To access the reminder feature, you first need to verify your Number from Twilio API</li>
+              <li>For demo login use :Username=Vedant Manish Chaudhari :Password=ved</li>
+
+            </ol>
+            <div className="mt-6 flex justify-between">
+              <button
+                onClick={handleContinueWithoutLogin}
+                className="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition"
+              >
+                Continue without login
+              </button>
+              <button
+                onClick={handleLoginDemo}
+                className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition"
+              >
+                Login
+              </button>
+
+
+            </div>
+            <a
+              href="/UserGuide.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Download User Guide
+            </a>
+          </motion.div>
+        </motion.div>
+      )}
+
       {/* Hero Section */}
       <header className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-32 relative overflow-hidden">
         <motion.div
@@ -27,7 +134,7 @@ const Home = () => {
             whileTap={{ scale: 0.95 }}
             className="bg-purple-600 text-white py-3 px-8 rounded-full text-xl hover:bg-purple-500 transition duration-300 shadow-2xl"
           >
-            <Link to="/cg">Get Started</Link>
+            <Link to="/cg">Welcome, {userName}!</Link>
           </motion.button>
         </motion.div>
         <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')" }}></div>
@@ -38,6 +145,7 @@ const Home = () => {
         </div>
       </header>
 
+      {/* Rest of the component remains the same */}
       {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto">
@@ -91,6 +199,8 @@ const Home = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-white text-purple-600 py-3 px-8 rounded-full text-xl hover:bg-purple-100 transition duration-300 shadow-lg"
+            onClick={handleClick}
+
           >
             Sign Up Now
           </motion.button>
