@@ -65,6 +65,7 @@ exports.updateReminder = async (req, res) => {
         if (date && time) {
             const dateTimeString = `${date}T${time}:00`;
             when = new Date(dateTimeString);
+            when = new Date(when.getTime() - (5.5 * 60 * 60 * 1000));
         }
 
 
