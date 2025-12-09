@@ -6,8 +6,8 @@ const Room = () => {
   const { roomId } = useParams();
 
   const myMeeting = async (element) => {
-    const appID = 739996763;// 1122569529;
-    const serverSecret = "dce929ef61dd0e7156086609cfd98a27";//"c419d589f3561e8a702006e9ca297130";
+    const appID =1568069075;// 739996763;// 1122569529;
+    const serverSecret = "960c273d1f368c9f3f0451d485f01858";//"dce929ef61dd0e7156086609cfd98a27";//"c419d589f3561e8a702006e9ca297130";
     const userID = Date.now().toString();
     const userName = "Vedant";
 
