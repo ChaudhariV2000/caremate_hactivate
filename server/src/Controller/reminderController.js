@@ -9,7 +9,7 @@ exports.createReminder = async (req, res) => {
 
         // Validation and date parsing (your existing code)
         const dateTimeString = `${date}T${time}:00`;
-        const when = new Date(dateTimeString);
+        let when = new Date(dateTimeString);
          // ❗ Adjust for 5 hour difference (subtract 5 hours)
         when = new Date(when.getTime() - (5 * 60 * 60 * 1000));
 
