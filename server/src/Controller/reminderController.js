@@ -11,7 +11,7 @@ exports.createReminder = async (req, res) => {
         const dateTimeString = `${date}T${time}:00`;
         let when = new Date(dateTimeString);
          // ❗ Adjust for 5 hour difference (subtract 5 hours)
-        when = new Date(when.getTime() - (5 * 60 * 60 * 1000));
+        when = new Date(when.getTime() - (5.5 * 60 * 60 * 1000));
 
         // Format phone number
         let formattedPhone = phoneNumber;
