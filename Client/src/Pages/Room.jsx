@@ -7,7 +7,7 @@ const Room = () => {
 
   const myMeeting = async (element) => {
     const appID =1965630916;//1668608289;//1568069075;// 739996763;// 1122569529;
-    const serverSecret ="be6edf94fde594415e44ef6c9bdaf78d";//"f2516865b7bbf3c8906d230bf4294bcb";//"960c273d1f368c9f3f0451d485f01858";//"dce929ef61dd0e7156086609cfd98a27";//"c419d589f3561e8a702006e9ca297130";
+    const serverSecret ="cddab2a9363398bee0621095de8af08c";//"f2516865b7bbf3c8906d230bf4294bcb";//"960c273d1f368c9f3f0451d485f01858";//"dce929ef61dd0e7156086609cfd98a27";//"c419d589f3561e8a702006e9ca297130";
     const userID = Date.now().toString();
     const userName = "Vedant";
 
